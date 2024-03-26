@@ -50,7 +50,7 @@ int temporizador()
         {
             segundos = 59;
             minutos --;
-            while (segundos != 0)
+            while (segundos >= 0)
             {
                 printf("+==-=-===+\n");
                 printf("|%02d:%02d:%02d|\n",  hora, minutos, segundos);
