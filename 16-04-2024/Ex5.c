@@ -20,13 +20,14 @@ int main()
     };
     char respostasCorretas[5][1] = 
     {
-        {'C'},
-        {'A'},
-        {'B'},
-        {'E'},
-        {'D'}
+        {'c'},
+        {'a'},
+        {'b'},
+        {'e'},
+        {'d'}
     };
     char respostasUsuario[5][1] = {{""}};
+    int pontos = 0;
     printf("Relacione as seguintes matrizes:\n");
     printf("|===========================================|\n");
     for(int i = 0; i < 5; i++)
@@ -38,7 +39,7 @@ int main()
     printf("|===========================================|\n");
     for(int i = 0; i < 5; i++)
     {
-        printf("Qual a resposta da pergunta %d?\n", i+1);
+        printf("Qual a resposta da %d?\n", i+1);
         scanf(" %c", respostasUsuario[i]);
         printf("|===========================================|\n");
             for(int j = 0; j < 5; j++)
@@ -49,4 +50,15 @@ int main()
             }
         printf("|===========================================|\n");
     }
+    for(int i = 0; i < 5; i++)
+    {
+        if(respostasUsuario[i][0] == respostasCorretas[i][0])
+        {
+            printf("Resposta %d correta!\n", i+1);
+            pontos ++;
+        } else {
+            printf("Resposta %d errada!\n", i+1);
+        }
+    }
+    printf("Pontos: %d", pontos);
 } 
