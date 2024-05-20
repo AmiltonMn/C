@@ -4,13 +4,14 @@
 int main()
 {
     char texto1[8] = "AMILTON";
-    char texto2[8] = "AMILTON";
+    char texto2[8] = "AMILtON";
     int flag = 0;
     for(int i = 0; i < 8; i++)
     {
         if(texto1[i] != texto2[i])
         {
             printf("Os textos sao diferentes!\n");
+            flag = 0;
             break;
         } else {
             flag = 1;
