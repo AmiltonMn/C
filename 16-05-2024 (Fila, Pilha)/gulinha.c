@@ -11,45 +11,78 @@ int adicionarFila(int * size, int * fila, int * pessoas, int horario)
 
     if (horario >= 17 && horario <= 22)
     {
-        max = rand() % 100;
-    } else {
         max = rand() % 50;
+    } else {
+        max = rand() % 35;
     }
 
-    for (int i = 0; i < rand() % max; i++)
+    for (int i = 0; i < max; i++)
     {
-        pessoas += 1;
-        enqueue(pessoas, size, fila);
+        (*pessoas) += 1;
+
+        enqueue((*pessoas), size, fila);
     }
 
     return max;
 }
 
-int removerFila(int * fila, int * size)
+int removerFila(int * fila, int * size, int * pessoas, int horario)
 {
-    int maxSaida = rand() % 15;
+    int maxSaida = rand() % 20;
 
-    for (int i = 0; i < maxSaida; i++)
+    if (maxSaida > (*pessoas) && horario > 22)
     {
-        dequeue(fila, size);
+        maxSaida = (*pessoas)/2;
+    }
+
+    if (horario < 22)
+    {
+        for (int i = 0; i < maxSaida; i++)
+        {
+            dequeue(fila, size);
+            (*pessoas) --;
+        }
+    } else if (horario > 22) {
+
+        maxSaida = rand() % 60;
+
+        if (maxSaida > (*pessoas))
+        {
+            maxSaida = (*pessoas);
+        }
+
+        for (int i = 0; i < maxSaida; i++)
+        {
+            dequeue(fila, size);
+
+            (*pessoas) --;
+        }
     }
 
     return maxSaida;
 }
 
-int desistencia(int * fila, int * size)
+int desistencia(int * fila, int * size, int * pessoas, int horario)
 {
-    int maxDesiste = rand() % 5;
+    int maxDesiste = rand() % 10;
+
+    if (maxDesiste > (*pessoas) && horario > 22)
+    {
+        maxDesiste = rand() % ((*pessoas)/2);
+    }
 
     for (int i = 0; i < maxDesiste; i++)
     {
         dequeue(fila, size);
+        (*pessoas) --;
     }
+
+    return maxDesiste;
 }
 
 int main()
 {
-    int horario = 8, pessoas = 0, tam = 220, sizeFila = 0, flag = 1;
+    int horario = 8, pessoas = 0, tam = 100, sizeFila = 0, flag = 1, dia = 1;
     srand(time(NULL));
     int * fila = definirFila(tam); 
 
@@ -58,20 +91,48 @@ int main()
 
     while (flag != 0)
     {
-        if (horario > 22 && sizeFila == 0)
+
+       if (horario < 24) {
+            Sleep(500);
+
+            printf("Pessoas dentro do mercado: %d\n", pessoas);
+
+            printf("Dia: %d\n", dia);
+
+            printf("Horario: %d\n", horario);
+
+            if (horario < 22 && dia <= 1)
+            {
+                printf("%d Pessoas entraram na fila\n", adicionarFila(&sizeFila, fila, &pessoas, horario));
+            }
+
+            printf("%d Pessoas finalizaram suas compras\n", removerFila(fila, &sizeFila, &pessoas, horario));
+
+            printf("%d Pessoas desistiram\n\n", desistencia(fila, &sizeFila, &pessoas, horario));
+
+            horario ++;
+
+            if (horario == 24)
+            {
+                dia ++;
+                horario = 0;
+            }
+
+            if (dia > 1 && horario > 2)
+            {
+                printf("%d pessoas foram expulsas do mercado!\n", pessoas);
+                flag = 0;
+            }
+        } 
+
+        if (horario >= 22 && pessoas <= 0)
         {
             printf("Fim da fila, programa encerrado!\n");
+
+            flag = 0;
+
             break;
         }
-        for (int i = 0; i < 10; i++)
-        {
-            Sleep(1);
-            printf("%d Pessoas entraram na fila\n", adicionarFila(sizeFila, fila, pessoas, horario));
-            printf("%d Pessoas finalizaram suas compras\n", removerFila(fila, sizeFila));
-            printf("%d Pessoas desistiram\n", desistencia(fila, sizeFila));
-        }
-
-        horario += 1;
     }
 
     free(fila);

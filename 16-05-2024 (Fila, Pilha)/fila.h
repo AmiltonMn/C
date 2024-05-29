@@ -15,7 +15,7 @@ int * definirFila(int tam)
 int enqueue(int value, int * size, int * fila)
 {
     fila[*size] = value;
-    (*size) ++;
+    return (*size) ++;
 }
 
 int dequeue(int * fila, int * sizeFila)
@@ -26,6 +26,7 @@ int dequeue(int * fila, int * sizeFila)
         fila[i] = fila[i + 1];
     }
 
-    (*sizeFila) --;
+    return *(sizeFila) --;
 }
+
 #endif
