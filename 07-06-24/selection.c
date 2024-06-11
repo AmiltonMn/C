@@ -13,19 +13,28 @@ void ordenar(int vetor[], int tamanho)
 
         for(int j = i; j <= tamanho; j++)
         {
+            if(j == tamanho)
+            {
+                vetor[tamanho] = vetor[i];
+                break;
+            }
+
             if(vetor[j] < menor)
             {
                 menor = vetor[j];
                 pos = j;
-            }
+            } 
         }
 
         printf("Valor do menor: %d\n", menor);
         printf("Valor de pos: %d\n", pos);
 
+        if(pos != 0)
+        {
+            vetor[pos] = vetor[i];
+        }
 
-        vetor[pos] = vetor[i];
-        if(i < tamanho -1)
+        if(i <= tamanho)
         {
             vetor[i] = menor;
         }
@@ -64,4 +73,4 @@ int main()
     {
         printf("[%d]", vetor[i]);
     }
-}
+} 
